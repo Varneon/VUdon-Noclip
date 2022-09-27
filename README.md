@@ -20,6 +20,13 @@ Noclip prefab for VRChat worlds.
 
 <details><summary>
 
+### Dependencies - `2`</summary>
+
+* [V-Inspector](https://github.com/Varneon/V-Inspector)
+* [Neon Inspector](https://github.com/Varneon/Neon-Inspector)
+
+</details><details><summary>
+
 ### Import with [VRChat Creator Companion](https://vcc.docs.vrchat.com/vpm/packages#user-packages):</summary>
 
 > 1. Download `com.varneon.vudon.noclip.zip` from [here](https://github.com/Varneon/VUdon-Noclip/releases/latest)
