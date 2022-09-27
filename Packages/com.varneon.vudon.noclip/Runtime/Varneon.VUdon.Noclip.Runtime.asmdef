@@ -1,9 +1,10 @@
 {
-    "name": "Varneon.VUdon.RepositoryTemplate.Editor",
-    "references": [],
-    "includePlatforms": [
-        "Editor"
+    "name": "Varneon.VUdon.Noclip.Runtime",
+    "references": [
+        "UdonSharp.Runtime",
+        "VRC.Udon"
     ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
