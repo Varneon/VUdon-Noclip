@@ -1,6 +1,12 @@
 {
     "name": "Varneon.VUdon.Noclip.Editor",
-    "references": [],
+    "references": [
+        "Varneon.NeonInspector.Editor",
+        "Varneon.VUdon.Noclip.Runtime",
+        "Varneon.V-Inspector.Runtime",
+        "Varneon.V-Inspector.Editor",
+        "UdonSharp.Runtime"
+    ],
     "includePlatforms": [
         "Editor"
     ],
