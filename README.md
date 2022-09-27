@@ -6,6 +6,14 @@
 
 Noclip for worlds
 
+# How To Use
+
+* Drag and drop the `Noclip` prefab from `Packages/VUdon - Noclip` into your scene
+
+> **NOTE:** If you want to prevent users from activating noclip, **_DISABLE THE COMPONENT!_** _(Proper support for noclip permissions will be added in a future release)_
+
+![image](https://user-images.githubusercontent.com/26690821/192450728-b17e2bcb-745b-4100-97e9-cf2b9c7ca909.png)
+
 # Installation
 
 <details><summary>
