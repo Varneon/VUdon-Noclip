@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine.UIElements;
 using Varneon.VInspector;
 
-namespace Varneon.UdonPrefabs.Core.Editor
+namespace Varneon.VUdon.Noclip.Editor
 {
     /// <summary>
     /// Custom inspector for Noclip prefab

@@ -21,7 +21,7 @@ MonoBehaviour:
   compiledVersion: 2
   behaviourSyncMode: 1
   hasInteractEvent: 0
-  scriptID: 5866275186562283669
+  scriptID: -1598890478726347409
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -62,7 +62,7 @@ MonoBehaviour:
       Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: Varneon.UdonPrefabs.Core.NoclipEnums.NoclipTriggerMethod, Varneon.UdonPrefabs.Core
+      Data: Varneon.VUdon.Noclip.Enums.NoclipTriggerMethod, Varneon.VUdon.Noclip.Runtime
     - Name: 
       Entry: 8
       Data: 
@@ -110,7 +110,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 8|Varneon.VInspector.FieldParentElementAttribute, Varneon.V-Inspector.Attributes
+      Data: 8|Varneon.VInspector.FieldParentElementAttribute, Varneon.V-Inspector.Runtime
     - Name: ParentName
       Entry: 1
       Data: Foldout_Settings
@@ -200,7 +200,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 15|Varneon.VInspector.FieldParentElementAttribute, Varneon.V-Inspector.Attributes
+      Data: 15|Varneon.VInspector.FieldParentElementAttribute, Varneon.V-Inspector.Runtime
     - Name: ParentName
       Entry: 1
       Data: Foldout_Settings
@@ -284,7 +284,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 21|Varneon.VInspector.FieldParentElementAttribute, Varneon.V-Inspector.Attributes
+      Data: 21|Varneon.VInspector.FieldParentElementAttribute, Varneon.V-Inspector.Runtime
     - Name: ParentName
       Entry: 1
       Data: Foldout_Settings
@@ -369,7 +369,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 27|Varneon.VInspector.FieldParentElementAttribute, Varneon.V-Inspector.Attributes
+      Data: 27|Varneon.VInspector.FieldParentElementAttribute, Varneon.V-Inspector.Runtime
     - Name: ParentName
       Entry: 1
       Data: Foldout_VR
@@ -378,7 +378,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 28|Varneon.VInspector.FieldLabelAttribute, Varneon.V-Inspector.Attributes
+      Data: 28|Varneon.VInspector.FieldLabelAttribute, Varneon.V-Inspector.Runtime
     - Name: FieldName
       Entry: 1
       Data: Input Exponent
@@ -462,7 +462,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 34|Varneon.VInspector.FieldParentElementAttribute, Varneon.V-Inspector.Attributes
+      Data: 34|Varneon.VInspector.FieldParentElementAttribute, Varneon.V-Inspector.Runtime
     - Name: ParentName
       Entry: 1
       Data: Foldout_Desktop
@@ -471,7 +471,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 35|Varneon.VInspector.FieldLabelAttribute, Varneon.V-Inspector.Attributes
+      Data: 35|Varneon.VInspector.FieldLabelAttribute, Varneon.V-Inspector.Runtime
     - Name: FieldName
       Entry: 1
       Data: Speed Fraction
@@ -549,7 +549,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 41|Varneon.VInspector.FieldParentElementAttribute, Varneon.V-Inspector.Attributes
+      Data: 41|Varneon.VInspector.FieldParentElementAttribute, Varneon.V-Inspector.Runtime
     - Name: ParentName
       Entry: 1
       Data: Foldout_Desktop
@@ -558,7 +558,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 42|Varneon.VInspector.FieldLabelAttribute, Varneon.V-Inspector.Attributes
+      Data: 42|Varneon.VInspector.FieldLabelAttribute, Varneon.V-Inspector.Runtime
     - Name: FieldName
       Entry: 1
       Data: Allow Vertical Input
@@ -636,7 +636,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 48|Varneon.VInspector.FieldParentElementAttribute, Varneon.V-Inspector.Attributes
+      Data: 48|Varneon.VInspector.FieldParentElementAttribute, Varneon.V-Inspector.Runtime
     - Name: ParentName
       Entry: 1
       Data: Foldout_Desktop
@@ -708,7 +708,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 53|Varneon.VInspector.FieldParentElementAttribute, Varneon.V-Inspector.Attributes
+      Data: 53|Varneon.VInspector.FieldParentElementAttribute, Varneon.V-Inspector.Runtime
     - Name: ParentName
       Entry: 1
       Data: Foldout_Desktop

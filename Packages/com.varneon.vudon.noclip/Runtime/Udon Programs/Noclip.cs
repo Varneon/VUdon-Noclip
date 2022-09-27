@@ -1,12 +1,12 @@
 ﻿using JetBrains.Annotations;
 using UdonSharp;
 using UnityEngine;
-using Varneon.UdonPrefabs.Core.NoclipEnums;
+using Varneon.VUdon.Noclip.Enums;
 using Varneon.VInspector;
 using VRC.SDKBase;
 using VRC.Udon.Common;
 
-namespace Varneon.UdonPrefabs.Core
+namespace Varneon.VUdon.Noclip
 {
     /// <summary>
     /// Simple noclip

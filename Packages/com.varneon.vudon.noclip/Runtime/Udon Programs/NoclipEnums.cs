@@ -1,4 +1,4 @@
-﻿namespace Varneon.UdonPrefabs.Core.NoclipEnums
+﻿namespace Varneon.VUdon.Noclip.Enums
 {
     /// <summary>
     /// Methdod for triggering noclip
