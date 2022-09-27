@@ -4,7 +4,9 @@
 
 </div>
 
-Noclip for worlds
+Noclip prefab for VRChat worlds.
+
+> _If you're used to the noclip from Source games (Garry's Mod, CS:S, CS:GO, etc., you should feel comfortable using this)_
 
 # How To Use
 
