@@ -22,8 +22,8 @@ Noclip prefab for VRChat worlds.
 
 ### Dependencies - `2`</summary>
 
-* [V-Inspector](https://github.com/Varneon/V-Inspector)
 * [Neon Inspector](https://github.com/Varneon/Neon-Inspector)
+  * [V-Inspector](https://github.com/Varneon/V-Inspector)
 
 </details><details><summary>
 
