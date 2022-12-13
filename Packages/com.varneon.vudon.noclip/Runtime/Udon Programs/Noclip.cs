@@ -257,6 +257,8 @@ namespace Varneon.VUdon.Noclip
         /// <param name="enabled"></param>
         private void SetNoclipEnabled(bool enabled)
         {
+            if (noclipEnabled == enabled) { return; }
+
             noclipEnabled = enabled;
 
             localPlayer.Immobilize(enabled);
