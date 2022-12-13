@@ -207,7 +207,7 @@ namespace Varneon.VUdon.Noclip
                     float deltaTimeMaxSpeed = deltaTime * (Input.GetKey(KeyCode.LeftShift) ? speed : speed * desktopSpeedFraction);
 
                     // Apply the position changes from vertical and horizontal inputs
-                    position += headRot * (new Vector3(inputMoveHorizontal, 0f, inputMoveVertical) * deltaTimeMaxSpeed);
+                    position += headRot * (new Vector3(inputMoveHorizontal, 0f, inputMoveVertical).normalized * deltaTimeMaxSpeed);
 
                     // If allowed, apply vertical motion
                     if (desktopVerticalInput)
