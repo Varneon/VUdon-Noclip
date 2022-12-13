@@ -108,7 +108,7 @@ namespace Varneon.VUdon.Noclip
         /// Current position of the player
         /// </summary>
         private Vector3 position;
-        
+
         /// <summary>
         /// Last position of the player
         /// </summary>
@@ -132,10 +132,20 @@ namespace Varneon.VUdon.Noclip
         /// </summary>
         private Collider[] playerCollider = new Collider[1];
 
-        private const string
-            AXIS_HORIZONTAL = "Horizontal",
-            AXIS_VERTICAL = "Vertical",
-            AXIS_RIGHT_THUMBSTICK_VERTICAL = "Oculus_CrossPlatform_SecondaryThumbstickVertical";
+        /// <summary>
+        /// Current horizontal move input
+        /// </summary>
+        private float inputMoveHorizontal;
+
+        /// <summary>
+        /// Current vertical move input
+        /// </summary>
+        private float inputMoveVertical;
+
+        /// <summary>
+        /// Current vertical look input
+        /// </summary>
+        private float inputLookVertical;
         #endregion // Private Variables
 
         #region Unity Methods
@@ -172,26 +182,19 @@ namespace Varneon.VUdon.Noclip
 
                 float deltaTime = Time.deltaTime;
 
-                float vertical = Input.GetAxisRaw(AXIS_VERTICAL);
-
-                float horizontal = Input.GetAxisRaw(AXIS_HORIZONTAL);
-
                 if (vrEnabled)
                 {
                     // Get magnitude of the movement input to apply shared exponential velocity
-                    float exponentialInputMagnitude = Mathf.Pow(new Vector2(horizontal, vertical).magnitude, vrSpeedExponent);
-
-                    // Get the vertical input from the right joystick
-                    float worldVertical = Input.GetAxisRaw(AXIS_RIGHT_THUMBSTICK_VERTICAL);
+                    float exponentialInputMagnitude = Mathf.Pow(new Vector2(inputMoveHorizontal, inputMoveVertical).magnitude, vrSpeedExponent);
 
                     // Get the maximum delta magnitude
                     float deltaTimeSpeed = deltaTime * speed;
 
                     // Create a delta vector for local X and Z axes
-                    Vector3 xzDelta = deltaTimeSpeed * exponentialInputMagnitude * new Vector3(horizontal, 0f, vertical);
+                    Vector3 xzDelta = deltaTimeSpeed * exponentialInputMagnitude * new Vector3(inputMoveHorizontal, 0f, inputMoveVertical);
 
                     // Create a delta vector for world Y axis
-                    Vector3 yWorldDelta = new Vector3(0f, Mathf.Pow(Mathf.Abs(worldVertical), vrSpeedExponent) * Mathf.Sign(worldVertical) * deltaTimeSpeed, 0f);
+                    Vector3 yWorldDelta = new Vector3(0f, Mathf.Pow(Mathf.Abs(inputLookVertical), vrSpeedExponent) * Mathf.Sign(inputLookVertical) * deltaTimeSpeed, 0f);
 
                     // Apply the position changes
                     position += headRot * xzDelta + yWorldDelta;
@@ -204,7 +207,7 @@ namespace Varneon.VUdon.Noclip
                     float deltaTimeMaxSpeed = deltaTime * (Input.GetKey(KeyCode.LeftShift) ? speed : speed * desktopSpeedFraction);
 
                     // Apply the position changes from vertical and horizontal inputs
-                    position += headRot * (new Vector3(horizontal, 0f, vertical) * deltaTimeMaxSpeed);
+                    position += headRot * (new Vector3(inputMoveHorizontal, 0f, inputMoveVertical) * deltaTimeMaxSpeed);
 
                     // If allowed, apply vertical motion
                     if (desktopVerticalInput)
@@ -309,6 +312,30 @@ namespace Varneon.VUdon.Noclip
                         SendCustomEventDelayedSeconds(nameof(_DisablePriming), toggleThreshold);
                     }
                 }
+            }
+        }
+
+        public override void InputMoveHorizontal(float value, UdonInputEventArgs args)
+        {
+            if (noclipEnabled)
+            {
+                inputMoveHorizontal = value;
+            }
+        }
+
+        public override void InputMoveVertical(float value, UdonInputEventArgs args)
+        {
+            if (noclipEnabled)
+            {
+                inputMoveVertical = value;
+            }
+        }
+
+        public override void InputLookVertical(float value, UdonInputEventArgs args)
+        {
+            if (noclipEnabled && vrEnabled)
+            {
+                inputLookVertical = value;
             }
         }
 
