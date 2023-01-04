@@ -20,6 +20,7 @@ namespace Varneon.VUdon.Noclip
         /// <summary>
         /// Methdod for triggering noclip
         /// </summary>
+        [Header("Settings")]
         [SerializeField]
         [Tooltip("Method for triggering the noclip mode")]
         [FieldParentElement("Foldout_Settings")]
@@ -46,6 +47,7 @@ namespace Varneon.VUdon.Noclip
         /// <summary>
         /// Input speed multiplier curve for VR
         /// </summary>
+        [Header("VR")]
         [SerializeField]
         [FieldParentElement("Foldout_VR")]
         [FieldLabel("Input Exponent")]
@@ -55,6 +57,7 @@ namespace Varneon.VUdon.Noclip
         /// <summary>
         /// Speed multiplier when Shift is not pressed
         /// </summary>
+        [Header("Desktop")]
         [SerializeField]
         [Tooltip("Speed multiplier when Shift is not pressed")]
         [Range(0.1f, 1f)]
