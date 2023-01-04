@@ -43,14 +43,13 @@ namespace Varneon.VUdon.Noclip
         private float speed = 15f;
 
         /// <summary>
-        /// Exponent of the linear input for raising the speed to the power of
+        /// Input speed multiplier curve for VR
         /// </summary>
         [SerializeField]
-        [Tooltip("[1 = Linear input curve | 1< = Exponential input curve] Helps with 'crawling' slowly when just slightly moving joystick even with higher standard speed")]
-        [Range(1f, 5f)]
         [FieldParentElement("Foldout_VR")]
         [FieldLabel("Input Exponent")]
-        private float vrSpeedExponent = 2f;
+        [Tooltip("Input speed multiplier curve for VR.\n\nHorizontal (0-1): VR movement input magnitude\n\nVertical (0-1): Speed multiplier")]
+        private AnimationCurve vrInputMultiplier = new AnimationCurve(new Keyframe(0f, 0f, 0f, 0f), new Keyframe(1f, 1f, 2f, 2f));
 
         /// <summary>
         /// Speed multiplier when Shift is not pressed
@@ -184,17 +183,17 @@ namespace Varneon.VUdon.Noclip
 
                 if (vrEnabled)
                 {
-                    // Get magnitude of the movement input to apply shared exponential velocity
-                    float exponentialInputMagnitude = Mathf.Pow(new Vector2(inputMoveHorizontal, inputMoveVertical).magnitude, vrSpeedExponent);
+                    // Get the movement input vector
+                    Vector3 movementInputVector = new Vector3(inputMoveHorizontal, 0f, inputMoveVertical);
 
                     // Get the maximum delta magnitude
                     float deltaTimeSpeed = deltaTime * speed;
 
                     // Create a delta vector for local X and Z axes
-                    Vector3 xzDelta = deltaTimeSpeed * exponentialInputMagnitude * new Vector3(inputMoveHorizontal, 0f, inputMoveVertical);
+                    Vector3 xzDelta = deltaTimeSpeed * vrInputMultiplier.Evaluate(movementInputVector.magnitude) * movementInputVector.normalized;
 
                     // Create a delta vector for world Y axis
-                    Vector3 yWorldDelta = new Vector3(0f, Mathf.Pow(Mathf.Abs(inputLookVertical), vrSpeedExponent) * Mathf.Sign(inputLookVertical) * deltaTimeSpeed, 0f);
+                    Vector3 yWorldDelta = new Vector3(0f, vrInputMultiplier.Evaluate(Mathf.Abs(inputLookVertical)) * Mathf.Sign(inputLookVertical) * deltaTimeSpeed, 0f);
 
                     // Apply the position changes
                     position += headRot * xzDelta + yWorldDelta;
