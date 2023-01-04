@@ -13,6 +13,7 @@ namespace Varneon.VUdon.Noclip
     /// Simple noclip
     /// </summary>
     [SelectionBase]
+    [HelpURL("https://github.com/Varneon/VUdon-Noclip/wiki/Settings")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class Noclip : UdonSharpBehaviour
     {
