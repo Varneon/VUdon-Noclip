@@ -383,7 +383,7 @@ MonoBehaviour:
       Data: 29|Varneon.VInspector.FieldLabelAttribute, Varneon.V-Inspector.Runtime
     - Name: FieldName
       Entry: 1
-      Data: Input Exponent
+      Data: Input Multiplier
     - Name: 
       Entry: 8
       Data: 

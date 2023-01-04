@@ -51,7 +51,7 @@ namespace Varneon.VUdon.Noclip
         [Header("VR")]
         [SerializeField]
         [FieldParentElement("Foldout_VR")]
-        [FieldLabel("Input Exponent")]
+        [FieldLabel("Input Multiplier")]
         [Tooltip("Input speed multiplier curve for VR.\n\nHorizontal (0-1): VR movement input magnitude\n\nVertical (0-1): Speed multiplier")]
         private AnimationCurve vrInputMultiplier = new AnimationCurve(new Keyframe(0f, 0f, 0f, 0f), new Keyframe(1f, 1f, 2f, 2f));
 
