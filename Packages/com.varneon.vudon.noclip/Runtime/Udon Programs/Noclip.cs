@@ -5,6 +5,7 @@ using Varneon.VUdon.Noclip.Enums;
 using Varneon.VInspector;
 using VRC.SDKBase;
 using VRC.Udon.Common;
+using VRC.Udon.Common.Enums;
 
 namespace Varneon.VUdon.Noclip
 {
@@ -145,6 +146,11 @@ namespace Varneon.VUdon.Noclip
         /// Current vertical look input
         /// </summary>
         private float inputLookVertical;
+
+        /// <summary>
+        /// The event timing for late update
+        /// </summary>
+        private const EventTiming LATE_UPDATE_EVENT_TIMING = EventTiming.LateUpdate;
         #endregion // Private Variables
 
         #region Unity Methods
@@ -157,7 +163,7 @@ namespace Varneon.VUdon.Noclip
             toggleByDoubleJump = noclipTriggerMethod == NoclipTriggerMethod.DoubleJump;
         }
 
-        private void LateUpdate()
+        public void _LateUpdate()
         {
             if (noclipEnabled)
             {
@@ -229,6 +235,8 @@ namespace Varneon.VUdon.Noclip
 
                 // Force the player's velocity to zero to prevent the falling animation from triggering
                 localPlayer.SetVelocity(Vector3.zero);
+
+                CueLateUpdate();
             }
         }
         #endregion
@@ -263,6 +271,8 @@ namespace Varneon.VUdon.Noclip
             {
                 // Get the initial position of the player
                 position = localPlayer.GetPosition();
+
+                CueLateUpdate();
             }
             else
             {
@@ -274,6 +284,14 @@ namespace Varneon.VUdon.Noclip
                 inputMoveVertical = 0f;
                 inputLookVertical = 0f;
             }
+        }
+
+        /// <summary>
+        /// Cues late update event for next frame
+        /// </summary>
+        private void CueLateUpdate()
+        {
+            SendCustomEventDelayedFrames(nameof(_LateUpdate), 0, LATE_UPDATE_EVENT_TIMING);
         }
         #endregion
 
