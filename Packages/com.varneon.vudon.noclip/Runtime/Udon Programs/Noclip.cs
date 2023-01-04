@@ -197,6 +197,15 @@ namespace Varneon.VUdon.Noclip
 
                     // Apply the position changes
                     position += headRot * xzDelta + yWorldDelta;
+
+                    // Get the player's playspace origin tracking data
+                    VRCPlayerApi.TrackingData originData = localPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Origin);
+
+                    // Get the playspace delta for applying to the final position
+                    Vector3 playspaceDelta = originData.position - localPlayerPos;
+
+                    // If the player is in VR, use the origin's rotation instead of player's rotation and align the room with spawn point
+                    localPlayer.TeleportTo(position + playspaceDelta, originData.rotation, VRC_SceneDescriptor.SpawnOrientation.AlignRoomWithSpawnPoint, true);
                 }
                 else
                 {
@@ -213,20 +222,8 @@ namespace Varneon.VUdon.Noclip
                     {
                         position += new Vector3(0f, deltaTimeMaxSpeed * worldVertical, 0f);
                     }
-                }
 
-                if (vrEnabled)
-                {
-                    VRCPlayerApi.TrackingData originData = localPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Origin);
-
-                    // Get the playspace delta for applying to the final position
-                    Vector3 playspaceDelta = originData.position - localPlayerPos;
-
-                    // If the player is in VR, use the origin's rotation instead of player's rotation and align the room with spawn point
-                    localPlayer.TeleportTo(position + playspaceDelta, originData.rotation, VRC_SceneDescriptor.SpawnOrientation.AlignRoomWithSpawnPoint, true);
-                }
-                else
-                {
+                    // Teleport player to the new position
                     localPlayer.TeleportTo(position, localPlayer.GetRotation(), VRC_SceneDescriptor.SpawnOrientation.Default, true);
                 }
 
