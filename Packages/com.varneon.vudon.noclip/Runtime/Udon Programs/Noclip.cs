@@ -342,18 +342,12 @@ namespace Varneon.VUdon.Noclip
 
         public override void InputMoveHorizontal(float value, UdonInputEventArgs args)
         {
-            if (noclipEnabled)
-            {
-                inputMoveHorizontal = value;
-            }
+            inputMoveHorizontal = value;
         }
 
         public override void InputMoveVertical(float value, UdonInputEventArgs args)
         {
-            if (noclipEnabled)
-            {
-                inputMoveVertical = value;
-            }
+            inputMoveVertical = value;
         }
 
         public override void InputLookVertical(float value, UdonInputEventArgs args)
