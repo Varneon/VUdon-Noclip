@@ -12,6 +12,7 @@ namespace Varneon.VUdon.Noclip
     /// Simple noclip
     /// </summary>
     [SelectionBase]
+    [DefaultExecutionOrder(-1000000000)]
     [HelpURL("https://github.com/Varneon/VUdon-Noclip/wiki/Settings")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class Noclip : UdonSharpBehaviour
