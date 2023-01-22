@@ -273,11 +273,6 @@ namespace Varneon.VUdon.Noclip
             {
                 // Apply the remainder velocity from last lerp to the player's velocity to allow them to fly after turning off noclip
                 localPlayer.SetVelocity((position - lastPosition) / Time.deltaTime);
-
-                // Reset the input values
-                inputMoveHorizontal = 0f;
-                inputMoveVertical = 0f;
-                inputLookVertical = 0f;
             }
         }
         #endregion
