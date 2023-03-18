@@ -1,7 +1,7 @@
 {
   "name": "com.varneon.vudon.noclip",
   "displayName": "VUdon - Noclip",
-  "version": "0.2.0-beta.4",
+  "version": "0.2.0",
   "unity": "2019.4",
   "unityRelease": "29f1",
   "description": "Noclip for worlds",
