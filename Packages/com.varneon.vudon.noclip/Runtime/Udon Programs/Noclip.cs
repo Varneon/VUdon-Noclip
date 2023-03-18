@@ -12,6 +12,8 @@ namespace Varneon.VUdon.Noclip
     /// Simple noclip
     /// </summary>
     [SelectionBase]
+    [DefaultExecutionOrder(-1000000000)]
+    [HelpURL("https://github.com/Varneon/VUdon-Noclip/wiki/Settings")]
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class Noclip : UdonSharpBehaviour
     {
@@ -19,6 +21,7 @@ namespace Varneon.VUdon.Noclip
         /// <summary>
         /// Methdod for triggering noclip
         /// </summary>
+        [Header("Settings")]
         [SerializeField]
         [Tooltip("Method for triggering the noclip mode")]
         [FieldParentElement("Foldout_Settings")]
@@ -43,18 +46,19 @@ namespace Varneon.VUdon.Noclip
         private float speed = 15f;
 
         /// <summary>
-        /// Exponent of the linear input for raising the speed to the power of
+        /// Input speed multiplier curve for VR
         /// </summary>
+        [Header("VR")]
         [SerializeField]
-        [Tooltip("[1 = Linear input curve | 1< = Exponential input curve] Helps with 'crawling' slowly when just slightly moving joystick even with higher standard speed")]
-        [Range(1f, 5f)]
         [FieldParentElement("Foldout_VR")]
-        [FieldLabel("Input Exponent")]
-        private float vrSpeedExponent = 2f;
+        [FieldLabel("Input Multiplier")]
+        [Tooltip("Input speed multiplier curve for VR.\n\nHorizontal (0-1): VR movement input magnitude\n\nVertical (0-1): Speed multiplier")]
+        private AnimationCurve vrInputMultiplier = new AnimationCurve(new Keyframe(0f, 0f, 0f, 0f), new Keyframe(1f, 1f, 2f, 2f));
 
         /// <summary>
         /// Speed multiplier when Shift is not pressed
         /// </summary>
+        [Header("Desktop")]
         [SerializeField]
         [Tooltip("Speed multiplier when Shift is not pressed")]
         [Range(0.1f, 1f)]
@@ -108,7 +112,7 @@ namespace Varneon.VUdon.Noclip
         /// Current position of the player
         /// </summary>
         private Vector3 position;
-        
+
         /// <summary>
         /// Last position of the player
         /// </summary>
@@ -132,10 +136,20 @@ namespace Varneon.VUdon.Noclip
         /// </summary>
         private Collider[] playerCollider = new Collider[1];
 
-        private const string
-            AXIS_HORIZONTAL = "Horizontal",
-            AXIS_VERTICAL = "Vertical",
-            AXIS_RIGHT_THUMBSTICK_VERTICAL = "Oculus_CrossPlatform_SecondaryThumbstickVertical";
+        /// <summary>
+        /// Current horizontal move input
+        /// </summary>
+        private float inputMoveHorizontal;
+
+        /// <summary>
+        /// Current vertical move input
+        /// </summary>
+        private float inputMoveVertical;
+
+        /// <summary>
+        /// Current vertical look input
+        /// </summary>
+        private float inputLookVertical;
         #endregion // Private Variables
 
         #region Unity Methods
@@ -172,49 +186,24 @@ namespace Varneon.VUdon.Noclip
 
                 float deltaTime = Time.deltaTime;
 
-                float vertical = Input.GetAxisRaw(AXIS_VERTICAL);
-
-                float horizontal = Input.GetAxisRaw(AXIS_HORIZONTAL);
-
                 if (vrEnabled)
                 {
-                    // Get magnitude of the movement input to apply shared exponential velocity
-                    float exponentialInputMagnitude = Mathf.Pow(new Vector2(horizontal, vertical).magnitude, vrSpeedExponent);
-
-                    // Get the vertical input from the right joystick
-                    float worldVertical = Input.GetAxisRaw(AXIS_RIGHT_THUMBSTICK_VERTICAL);
+                    // Get the movement input vector
+                    Vector3 movementInputVector = new Vector3(inputMoveHorizontal, 0f, inputMoveVertical);
 
                     // Get the maximum delta magnitude
                     float deltaTimeSpeed = deltaTime * speed;
 
                     // Create a delta vector for local X and Z axes
-                    Vector3 xzDelta = deltaTimeSpeed * exponentialInputMagnitude * new Vector3(horizontal, 0f, vertical);
+                    Vector3 xzDelta = deltaTimeSpeed * vrInputMultiplier.Evaluate(movementInputVector.magnitude) * movementInputVector.normalized;
 
                     // Create a delta vector for world Y axis
-                    Vector3 yWorldDelta = new Vector3(0f, Mathf.Pow(Mathf.Abs(worldVertical), vrSpeedExponent) * Mathf.Sign(worldVertical) * deltaTimeSpeed, 0f);
+                    Vector3 yWorldDelta = new Vector3(0f, vrInputMultiplier.Evaluate(Mathf.Abs(inputLookVertical)) * Mathf.Sign(inputLookVertical) * deltaTimeSpeed, 0f);
 
                     // Apply the position changes
                     position += headRot * xzDelta + yWorldDelta;
-                }
-                else
-                {
-                    float worldVertical = (Input.GetKey(downKey) ? 0f : 1f) - (Input.GetKey(upKey) ? 0f : 1f);
 
-                    // Get the maximum delta magnitude
-                    float deltaTimeMaxSpeed = deltaTime * (Input.GetKey(KeyCode.LeftShift) ? speed : speed * desktopSpeedFraction);
-
-                    // Apply the position changes from vertical and horizontal inputs
-                    position += headRot * (new Vector3(horizontal, 0f, vertical) * deltaTimeMaxSpeed);
-
-                    // If allowed, apply vertical motion
-                    if (desktopVerticalInput)
-                    {
-                        position += new Vector3(0f, deltaTimeMaxSpeed * worldVertical, 0f);
-                    }
-                }
-
-                if (vrEnabled)
-                {
+                    // Get the player's playspace origin tracking data
                     VRCPlayerApi.TrackingData originData = localPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Origin);
 
                     // Get the playspace delta for applying to the final position
@@ -225,6 +214,21 @@ namespace Varneon.VUdon.Noclip
                 }
                 else
                 {
+                    float worldVertical = (Input.GetKey(downKey) ? 0f : 1f) - (Input.GetKey(upKey) ? 0f : 1f);
+
+                    // Get the maximum delta magnitude
+                    float deltaTimeMaxSpeed = deltaTime * (Input.GetKey(KeyCode.LeftShift) ? speed : speed * desktopSpeedFraction);
+
+                    // Apply the position changes from vertical and horizontal inputs
+                    position += headRot * (new Vector3(inputMoveHorizontal, 0f, inputMoveVertical).normalized * deltaTimeMaxSpeed);
+
+                    // If allowed, apply vertical motion
+                    if (desktopVerticalInput)
+                    {
+                        position += new Vector3(0f, deltaTimeMaxSpeed * worldVertical, 0f);
+                    }
+
+                    // Teleport player to the new position
                     localPlayer.TeleportTo(position, localPlayer.GetRotation(), VRC_SceneDescriptor.SpawnOrientation.Default, true);
                 }
 
@@ -254,6 +258,8 @@ namespace Varneon.VUdon.Noclip
         /// <param name="enabled"></param>
         private void SetNoclipEnabled(bool enabled)
         {
+            if (noclipEnabled == enabled) { return; }
+
             noclipEnabled = enabled;
 
             localPlayer.Immobilize(enabled);
@@ -309,6 +315,24 @@ namespace Varneon.VUdon.Noclip
                         SendCustomEventDelayedSeconds(nameof(_DisablePriming), toggleThreshold);
                     }
                 }
+            }
+        }
+
+        public override void InputMoveHorizontal(float value, UdonInputEventArgs args)
+        {
+            inputMoveHorizontal = value;
+        }
+
+        public override void InputMoveVertical(float value, UdonInputEventArgs args)
+        {
+            inputMoveVertical = value;
+        }
+
+        public override void InputLookVertical(float value, UdonInputEventArgs args)
+        {
+            if (noclipEnabled && vrEnabled)
+            {
+                inputLookVertical = value;
             }
         }
 

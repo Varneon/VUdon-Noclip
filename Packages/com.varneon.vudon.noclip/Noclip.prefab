@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7617984235308416798}
-  - component: {fileID: 7617984235308416785}
-  - component: {fileID: 7617984235308416784}
+  - component: {fileID: 7117740436155577295}
+  - component: {fileID: 6077235003161976082}
   m_Layer: 0
   m_Name: Noclip
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7617984235308416785
+--- !u!114 &7117740436155577295
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53,16 +53,39 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  _udonSharpBackingUdonBehaviour: {fileID: 7617984235308416784}
+  _udonSharpBackingUdonBehaviour: {fileID: 6077235003161976082}
   noclipTriggerMethod: 0
   toggleThreshold: 0.25
   speed: 15
-  vrSpeedExponent: 2
+  vrInputMultiplier:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   desktopSpeedFraction: 0.25
   desktopVerticalInput: 1
   upKey: 101
   downKey: 113
---- !u!114 &7617984235308416784
+--- !u!114 &6077235003161976082
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -81,7 +104,7 @@ MonoBehaviour:
   SynchronizePosition: 0
   AllowCollisionOwnershipTransfer: 0
   Reliable: 0
-  _syncMethod: 1
+  _syncMethod: 0
   serializedProgramAsset: {fileID: 11400000, guid: e9cf694ca30d71e42ac2f35b1ec6a93f,
     type: 2}
   programSource: {fileID: 11400000, guid: 51ead3bb0841106499e15c410ba8685c, type: 2}

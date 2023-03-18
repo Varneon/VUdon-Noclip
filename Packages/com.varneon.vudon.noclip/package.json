@@ -1,7 +1,7 @@
 {
   "name": "com.varneon.vudon.noclip",
   "displayName": "VUdon - Noclip",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "unity": "2019.4",
   "unityRelease": "29f1",
   "description": "Noclip for worlds",
@@ -11,10 +11,11 @@
   },
   "dependencies": {
     "com.vrchat.udonsharp": "1.0.1",
-    "com.varneon.neon-inspector": "0.0.1"
+    "com.varneon.neon-inspector": "0.0.2"
   },
   "vpmDependencies": {
     "com.vrchat.udonsharp": "1.x.x",
-    "com.varneon.neon-inspector": "0.0.1"
-  }
+    "com.varneon.neon-inspector": ">=0.0.2 <1.0.0"
+  },
+  "resolutionStrategy": "highestMinor"
 }

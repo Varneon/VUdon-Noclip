@@ -1,6 +1,6 @@
 <div>
 
-# VUdon - Noclip [![GitHub](https://img.shields.io/github/license/Varneon/VUdon-Noclip?color=blue&label=License&style=flat)](https://github.com/Varneon/VUdon-Noclip/blob/main/LICENSE) [![GitHub Repo stars](https://img.shields.io/github/stars/Varneon/VUdon-Noclip?style=flat&label=Stars)](https://github.com/Varneon/VUdon-Noclip/stargazers) [![GitHub all releases](https://img.shields.io/github/downloads/Varneon/VUdon-Noclip/total?color=blue&label=Downloads&style=flat)](https://github.com/Varneon/VUdon-Noclip/releases) [![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/Varneon/VUdon-Noclip?color=blue&label=Release&sort=semver&style=flat)](https://github.com/Varneon/VUdon-Noclip/releases/latest)
+# [VUdon](https://github.com/Varneon/VUdon) - Noclip [![GitHub](https://img.shields.io/github/license/Varneon/VUdon-Noclip?color=blue&label=License&style=flat)](https://github.com/Varneon/VUdon-Noclip/blob/main/LICENSE) [![GitHub Repo stars](https://img.shields.io/github/stars/Varneon/VUdon-Noclip?style=flat&label=Stars)](https://github.com/Varneon/VUdon-Noclip/stargazers) [![GitHub all releases](https://img.shields.io/github/downloads/Varneon/VUdon-Noclip/total?color=blue&label=Downloads&style=flat)](https://github.com/Varneon/VUdon-Noclip/releases) [![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/Varneon/VUdon-Noclip?color=blue&label=Release&sort=semver&style=flat)](https://github.com/Varneon/VUdon-Noclip/releases/latest)
 
 </div>
 
