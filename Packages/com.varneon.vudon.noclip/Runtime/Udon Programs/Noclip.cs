@@ -1,8 +1,9 @@
 ﻿using JetBrains.Annotations;
 using UdonSharp;
 using UnityEngine;
-using Varneon.VUdon.Noclip.Enums;
 using Varneon.VInspector;
+using Varneon.VUdon.Noclip.Abstract;
+using Varneon.VUdon.Noclip.Enums;
 using VRC.SDKBase;
 using VRC.Udon.Common;
 
@@ -91,6 +92,14 @@ namespace Varneon.VUdon.Noclip
         [FieldParentElement("Foldout_Desktop")]
         private KeyCode downKey = KeyCode.Q;
         #endregion // Serialized Fields
+
+        #region Serialized Hidden Fields
+        /// <summary>
+        /// Callback receivers for noclip events
+        /// </summary>
+        [SerializeField, HideInInspector]
+        internal NoclipEventCallbackReceiver[] callbackReceivers;
+        #endregion
 
         #region Private Variables
         /// <summary>
@@ -273,6 +282,13 @@ namespace Varneon.VUdon.Noclip
             {
                 // Apply the remainder velocity from last lerp to the player's velocity to allow them to fly after turning off noclip
                 localPlayer.SetVelocity((position - lastPosition) / Time.deltaTime);
+            }
+
+            foreach(NoclipEventCallbackReceiver callbackReceiver in callbackReceivers)
+            {
+                if(callbackReceiver == null) { continue; }
+
+                callbackReceiver.OnNoclipEnabledStateChanged(enabled);
             }
         }
         #endregion
