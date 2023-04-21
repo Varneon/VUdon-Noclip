@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UdonSharp;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UIElements;
 using Varneon.VInspector;
 
@@ -11,8 +12,11 @@ namespace Varneon.VUdon.Noclip.Editor
     /// </summary>
     [CustomEditor(typeof(Noclip))]
     [IgnoreFieldsOfType(typeof(UdonSharpBehaviour))]
-    public class NoclipEditor : NeonInspector.NeonInspector
+    public class NoclipEditor : InspectorBase
     {
+        [SerializeField]
+        private Texture2D banner;
+
         private const string FOLDOUT_PERSISTENCE_KEY = "Varneon/VUdon/Noclip/Editor/Foldouts";
 
         private List<Foldout> foldouts;
@@ -20,6 +24,8 @@ namespace Varneon.VUdon.Noclip.Editor
         protected override void OnInspectorVisualTreeAssetCloned(VisualElement root)
         {
             base.OnInspectorVisualTreeAssetCloned(root);
+
+            root.Q("Banner").style.backgroundImage = banner;
 
             VisualElement inspectorPanel = root.Q("InspectorPanel");
 

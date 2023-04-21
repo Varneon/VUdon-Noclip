@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "com.vrchat.udonsharp": "1.0.1",
-    "com.varneon.neon-inspector": "0.0.2"
+    "com.varneon.v-inspector": "0.3.0-beta.1"
   },
   "vpmDependencies": {
     "com.vrchat.udonsharp": "1.x.x",
