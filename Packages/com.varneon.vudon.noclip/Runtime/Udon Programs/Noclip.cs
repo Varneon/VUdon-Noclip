@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
 using UdonSharp;
 using UnityEngine;
-using Varneon.VInspector;
+using Varneon.VUdon.Editors;
 using Varneon.VUdon.Noclip.Abstract;
 using Varneon.VUdon.Noclip.Enums;
 using VRC.SDKBase;
@@ -22,36 +22,34 @@ namespace Varneon.VUdon.Noclip
         /// <summary>
         /// Methdod for triggering noclip
         /// </summary>
-        [Header("Settings")]
+        [FoldoutHeader("Options", "Options that can be edited before build and in-game")]
         [SerializeField]
         [Tooltip("Method for triggering the noclip mode")]
-        [FieldParentElement("Foldout_Settings")]
         private NoclipTriggerMethod noclipTriggerMethod = NoclipTriggerMethod.DoubleJump;
 
         /// <summary>
         /// Time in which jump has to be double tapped in order to toggle noclip
         /// </summary>
         [SerializeField]
+        [FieldLabel("Toggle Threshold (s)")]
         [Tooltip("Time in which jump has to be double tapped in order to toggle noclip")]
-        [Range(0.1f, 1f)]
-        [FieldParentElement("Foldout_Settings")]
+        [FieldRange(0.1f, 1f)]
         private float toggleThreshold = 0.25f;
 
         /// <summary>
         /// Maximum speed in m/s
         /// </summary>
         [SerializeField]
+        [FieldLabel("Speed (m/s)")]
         [Tooltip("Maximum speed in m/s")]
-        [Range(1f, 50f)]
-        [FieldParentElement("Foldout_Settings")]
+        [FieldRange(1f, 50f)]
         private float speed = 15f;
 
         /// <summary>
         /// Input speed multiplier curve for VR
         /// </summary>
-        [Header("VR")]
+        [FoldoutHeader("VR", "VR exclusive settings")]
         [SerializeField]
-        [FieldParentElement("Foldout_VR")]
         [FieldLabel("Input Multiplier")]
         [Tooltip("Input speed multiplier curve for VR.\n\nHorizontal (0-1): VR movement input magnitude\n\nVertical (0-1): Speed multiplier")]
         private AnimationCurve vrInputMultiplier = new AnimationCurve(new Keyframe(0f, 0f, 0f, 0f), new Keyframe(1f, 1f, 2f, 2f));
@@ -59,11 +57,10 @@ namespace Varneon.VUdon.Noclip
         /// <summary>
         /// Speed multiplier when Shift is not pressed
         /// </summary>
-        [Header("Desktop")]
+        [FoldoutHeader("Desktop", "Desktop exclusive settings")]
         [SerializeField]
         [Tooltip("Speed multiplier when Shift is not pressed")]
         [Range(0.1f, 1f)]
-        [FieldParentElement("Foldout_Desktop")]
         [FieldLabel("Speed Fraction")]
         private float desktopSpeedFraction = 0.25f;
 
@@ -72,7 +69,6 @@ namespace Varneon.VUdon.Noclip
         /// </summary>
         [SerializeField]
         [Tooltip("Allow vertical movement on desktop")]
-        [FieldParentElement("Foldout_Desktop")]
         [FieldLabel("Allow Vertical Input")]
         private bool desktopVerticalInput = true;
 
@@ -80,16 +76,16 @@ namespace Varneon.VUdon.Noclip
         /// Key for ascending on desktop
         /// </summary>
         [SerializeField]
+        [FieldDisable(LogicType.AND, nameof(desktopVerticalInput))]
         [Tooltip("Key for ascending on desktop")]
-        [FieldParentElement("Foldout_Desktop")]
         private KeyCode upKey = KeyCode.E;
 
         /// <summary>
         /// Key for descending on desktop
         /// </summary>
         [SerializeField]
+        [FieldDisable(LogicType.AND, nameof(desktopVerticalInput))]
         [Tooltip("Key for descending on desktop")]
-        [FieldParentElement("Foldout_Desktop")]
         private KeyCode downKey = KeyCode.Q;
         #endregion // Serialized Fields
 
@@ -284,9 +280,9 @@ namespace Varneon.VUdon.Noclip
                 localPlayer.SetVelocity((position - lastPosition) / Time.deltaTime);
             }
 
-            foreach(NoclipEventCallbackReceiver callbackReceiver in callbackReceivers)
+            foreach (NoclipEventCallbackReceiver callbackReceiver in callbackReceivers)
             {
-                if(callbackReceiver == null) { continue; }
+                if (callbackReceiver == null) { continue; }
 
                 callbackReceiver.OnNoclipEnabledStateChanged(enabled);
             }
