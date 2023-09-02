@@ -2,6 +2,7 @@
 
 ### Added
 - Dependency requirement for [VUdon Editors](https://github.com/Varneon/VUdon-Editors) (#16).
+- AddComponentMenu item for adding noclip
 
 ### Changed
 - Migrated to use [VUdon Editors](https://github.com/Varneon/VUdon-Editors) for custom inspector (#16).
