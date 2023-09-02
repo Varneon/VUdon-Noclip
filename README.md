@@ -10,38 +10,25 @@ Noclip prefab for VRChat worlds.
 
 # How To Use
 
-* Drag and drop the `Noclip` prefab from `Packages/VUdon - Noclip` into your scene
+View [README](Packages/com.varneon.vudon.noclip/README.md) for instructions on how to use the Noclip.
 
 > **NOTE:** If you want to prevent users from activating noclip, **_DISABLE THE COMPONENT!_** _(Proper support for noclip permissions will be added in a future release)_
 
-![image](https://user-images.githubusercontent.com/26690821/192450728-b17e2bcb-745b-4100-97e9-cf2b9c7ca909.png)
+![preview](https://github.com/Varneon/VUdon-Noclip/assets/26690821/bac3fd06-c40b-4944-a498-9379f03e1ca8)
 
 # Installation
 
 <details><summary>
 
-### Dependencies - `2`</summary>
+### Dependencies - `1`</summary>
 
-* [Neon Inspector](https://github.com/Varneon/Neon-Inspector)
-  * [V-Inspector](https://github.com/Varneon/V-Inspector)
-
-</details><details><summary>
-
-### Import with [VRChat Creator Companion](https://vcc.docs.vrchat.com/vpm/packages#user-packages):</summary>
-
-> 1. Download `com.varneon.vudon.noclip.zip` from [here](https://github.com/Varneon/VUdon-Noclip/releases/latest)
-> 2. Unpack the .zip somewhere
-> 3. In VRChat Creator Companion, navigate to `Settings` > `User Packages` > `Add`
-> 4. Navigate to the unpacked folder, `com.varneon.vudon.noclip` and click `Select Folder`
-> 5. `VUdon - Noclip` should now be visible under `Local User Packages` in the project view in VRChat Creator Companion
-> 6. Click `Add`
+* [VUdon Editors](https://github.com/Varneon/VUdon-Editors)
 
 </details><details><summary>
 
-### Import with [Unity Package Manager (git)](https://docs.unity3d.com/2019.4/Documentation/Manual/upm-ui-giturl.html):</summary>
+### Import with [VRChat Creator Companion](https://vcc.docs.vrchat.com/vpm/packages):</summary>
 
-> 1. In the Unity toolbar, select `Window` > `Package Manager` > `[+]` > `Add package from git URL...` 
-> 2. Paste the following link: `https://github.com/Varneon/VUdon-Noclip.git?path=/Packages/com.varneon.vudon.noclip`
+> VPM repository listings will be released Soon™
 
 </details><details><summary>
 
