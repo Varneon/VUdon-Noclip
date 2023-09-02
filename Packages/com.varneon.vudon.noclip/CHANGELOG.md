@@ -6,6 +6,7 @@
 ### Changed
 - Migrated to use [VUdon Editors](https://github.com/Varneon/VUdon-Editors) for custom inspector (#16).
 - Updated UdonSharp dependency version definition from `1.0.1` to `1.1.9`
+- Moved the noclip prefab from root of the package to `Runtime/Prefabs/Noclip.prefab`
 
 ### Removed
 - Dependency requirement for [V-Inspector](https://github.com/Varneon/V-Inspector) (#16).
