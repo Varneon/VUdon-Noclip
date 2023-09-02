@@ -191,6 +191,9 @@ namespace Varneon.VUdon.Noclip
 
                 float deltaTime = Time.deltaTime;
 
+                // Get the player's playspace origin tracking data (On desktop this is the point where the player is standing)
+                VRCPlayerApi.TrackingData originData = localPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Origin);
+
                 if (vrEnabled)
                 {
                     // Get the movement input vector
@@ -207,9 +210,6 @@ namespace Varneon.VUdon.Noclip
 
                     // Apply the position changes
                     position += headRot * xzDelta + yWorldDelta;
-
-                    // Get the player's playspace origin tracking data
-                    VRCPlayerApi.TrackingData originData = localPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Origin);
 
                     // Get the playspace delta for applying to the final position
                     Vector3 playspaceDelta = originData.position - localPlayerPos;
@@ -234,7 +234,7 @@ namespace Varneon.VUdon.Noclip
                     }
 
                     // Teleport player to the new position
-                    localPlayer.TeleportTo(position, localPlayer.GetRotation(), VRC_SceneDescriptor.SpawnOrientation.Default, true);
+                    localPlayer.TeleportTo(position, originData.rotation, VRC_SceneDescriptor.SpawnOrientation.Default, true);
                 }
 
                 // Force the player's velocity to zero to prevent the falling animation from triggering
