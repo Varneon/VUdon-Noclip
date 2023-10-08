@@ -10,11 +10,11 @@
     "url": "https://github.com/Varneon"
   },
   "dependencies": {
-    "com.vrchat.udonsharp": "1.1.9",
+    "com.vrchat.worlds": "3.4.0",
     "com.varneon.vudon.editors": "0.1.0-alpha.8"
   },
   "vpmDependencies": {
-    "com.vrchat.udonsharp": ">=1.1.9 <2.0.0",
+    "com.vrchat.worlds": ">=3.4.0 <4.0.0",
     "com.varneon.vudon.editors": ">=0.1.0-alpha.8"
   },
   "resolutionStrategy": "highestMinor"
