@@ -1,6 +1,8 @@
 ﻿using JetBrains.Annotations;
+using System;
 using UdonSharp;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Varneon.VUdon.Editors;
 using Varneon.VUdon.Noclip.Abstract;
 using Varneon.VUdon.Noclip.Enums;
@@ -20,75 +22,75 @@ namespace Varneon.VUdon.Noclip
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class Noclip : UdonSharpBehaviour
     {
-        #region Serialized Fields
+        #region Public Fields
         /// <summary>
         /// Methdod for triggering noclip
         /// </summary>
         [FoldoutHeader("Options", "Options that can be edited before build and in-game")]
-        [SerializeField]
+        [FormerlySerializedAs("noclipTriggerMethod")]
         [Tooltip("Method for triggering the noclip mode")]
-        private NoclipTriggerMethod noclipTriggerMethod = NoclipTriggerMethod.DoubleJump;
+        public NoclipTriggerMethod NoclipTriggerMethod = NoclipTriggerMethod.DoubleJump;
 
         /// <summary>
         /// Time in which jump has to be double tapped in order to toggle noclip
         /// </summary>
-        [SerializeField]
+        [FormerlySerializedAs("toggleThreshold")]
         [FieldLabel("Toggle Threshold (s)")]
         [Tooltip("Time in which jump has to be double tapped in order to toggle noclip")]
         [FieldRange(0.1f, 1f)]
-        private float toggleThreshold = 0.25f;
+        public float ToggleThreshold = 0.25f;
 
         /// <summary>
         /// Maximum speed in m/s
         /// </summary>
-        [SerializeField]
+        [FormerlySerializedAs("speed")]
         [FieldLabel("Speed (m/s)")]
         [Tooltip("Maximum speed in m/s")]
         [FieldRange(1f, 50f)]
-        private float speed = 15f;
+        public float Speed = 15f;
 
         /// <summary>
         /// Input speed multiplier curve for VR
         /// </summary>
         [FoldoutHeader("VR", "VR exclusive settings")]
-        [SerializeField]
+        [FormerlySerializedAs("vrInputMultiplier")]
         [FieldLabel("Input Multiplier")]
         [Tooltip("Input speed multiplier curve for VR.\n\nHorizontal (0-1): VR movement input magnitude\n\nVertical (0-1): Speed multiplier")]
-        private AnimationCurve vrInputMultiplier = new AnimationCurve(new Keyframe(0f, 0f, 0f, 0f), new Keyframe(1f, 1f, 2f, 2f));
+        public AnimationCurve VRInputMultiplier = new AnimationCurve(new Keyframe(0f, 0f, 0f, 0f), new Keyframe(1f, 1f, 2f, 2f));
 
         /// <summary>
         /// Speed multiplier when Shift is not pressed
         /// </summary>
         [FoldoutHeader("Desktop", "Desktop exclusive settings")]
-        [SerializeField]
+        [FormerlySerializedAs("desktopSpeedFraction")]
         [Tooltip("Speed multiplier when Shift is not pressed")]
         [Range(0.1f, 1f)]
         [FieldLabel("Speed Fraction")]
-        private float desktopSpeedFraction = 0.25f;
+        public float DesktopSpeedFraction = 0.25f;
 
         /// <summary>
         /// Allow vertical movement on desktop
         /// </summary>
-        [SerializeField]
+        [FormerlySerializedAs("desktopVerticalInput")]
         [Tooltip("Allow vertical movement on desktop")]
         [FieldLabel("Allow Vertical Input")]
-        private bool desktopVerticalInput = true;
+        public bool AllowDesktopVerticalInput = true;
 
         /// <summary>
         /// Key for ascending on desktop
         /// </summary>
-        [SerializeField]
-        [FieldDisable(LogicType.AND, nameof(desktopVerticalInput))]
+        [FormerlySerializedAs("upKey")]
+        [FieldDisable(LogicType.AND, nameof(AllowDesktopVerticalInput))]
         [Tooltip("Key for ascending on desktop")]
-        private KeyCode upKey = KeyCode.E;
+        public KeyCode UpKey = KeyCode.E;
 
         /// <summary>
         /// Key for descending on desktop
         /// </summary>
-        [SerializeField]
-        [FieldDisable(LogicType.AND, nameof(desktopVerticalInput))]
+        [FormerlySerializedAs("downKey")]
+        [FieldDisable(LogicType.AND, nameof(AllowDesktopVerticalInput))]
         [Tooltip("Key for descending on desktop")]
-        private KeyCode downKey = KeyCode.Q;
+        public KeyCode DownKey = KeyCode.Q;
         #endregion // Serialized Fields
 
         #region Serialized Hidden Fields
@@ -166,7 +168,7 @@ namespace Varneon.VUdon.Noclip
 
             vrEnabled = localPlayer.IsUserInVR();
 
-            toggleByDoubleJump = noclipTriggerMethod == NoclipTriggerMethod.DoubleJump;
+            toggleByDoubleJump = NoclipTriggerMethod == NoclipTriggerMethod.DoubleJump;
         }
 
         private void LateUpdate()
@@ -202,13 +204,13 @@ namespace Varneon.VUdon.Noclip
                     Vector3 movementInputVector = new Vector3(inputMoveHorizontal, 0f, inputMoveVertical);
 
                     // Get the maximum delta magnitude
-                    float deltaTimeSpeed = deltaTime * speed;
+                    float deltaTimeSpeed = deltaTime * Speed;
 
                     // Create a delta vector for local X and Z axes
-                    Vector3 xzDelta = deltaTimeSpeed * vrInputMultiplier.Evaluate(movementInputVector.magnitude) * movementInputVector.normalized;
+                    Vector3 xzDelta = deltaTimeSpeed * VRInputMultiplier.Evaluate(movementInputVector.magnitude) * movementInputVector.normalized;
 
                     // Create a delta vector for world Y axis
-                    Vector3 yWorldDelta = new Vector3(0f, vrInputMultiplier.Evaluate(Mathf.Abs(inputLookVertical)) * Mathf.Sign(inputLookVertical) * deltaTimeSpeed, 0f);
+                    Vector3 yWorldDelta = new Vector3(0f, VRInputMultiplier.Evaluate(Mathf.Abs(inputLookVertical)) * Mathf.Sign(inputLookVertical) * deltaTimeSpeed, 0f);
 
                     // Apply the position changes
                     position += headRot * xzDelta + yWorldDelta;
@@ -221,16 +223,16 @@ namespace Varneon.VUdon.Noclip
                 }
                 else
                 {
-                    float worldVertical = (Input.GetKey(downKey) ? 0f : 1f) - (Input.GetKey(upKey) ? 0f : 1f);
+                    float worldVertical = (Input.GetKey(DownKey) ? 0f : 1f) - (Input.GetKey(UpKey) ? 0f : 1f);
 
                     // Get the maximum delta magnitude
-                    float deltaTimeMaxSpeed = deltaTime * (Input.GetKey(KeyCode.LeftShift) ? speed : speed * desktopSpeedFraction);
+                    float deltaTimeMaxSpeed = deltaTime * (Input.GetKey(KeyCode.LeftShift) ? Speed : Speed * DesktopSpeedFraction);
 
                     // Apply the position changes from vertical and horizontal inputs
                     position += headRot * (new Vector3(inputMoveHorizontal, 0f, inputMoveVertical).normalized * deltaTimeMaxSpeed);
 
                     // If allowed, apply vertical motion
-                    if (desktopVerticalInput)
+                    if (AllowDesktopVerticalInput)
                     {
                         position += new Vector3(0f, deltaTimeMaxSpeed * worldVertical, 0f);
                     }
@@ -310,7 +312,7 @@ namespace Varneon.VUdon.Noclip
                     {
                         switchPrimed = true;
 
-                        SendCustomEventDelayedSeconds(nameof(_DisablePriming), toggleThreshold);
+                        SendCustomEventDelayedSeconds(nameof(_DisablePriming), ToggleThreshold);
                     }
                 }
                 else
@@ -326,7 +328,7 @@ namespace Varneon.VUdon.Noclip
                     {
                         switchPrimed = true;
 
-                        SendCustomEventDelayedSeconds(nameof(_DisablePriming), toggleThreshold);
+                        SendCustomEventDelayedSeconds(nameof(_DisablePriming), ToggleThreshold);
                     }
                 }
             }
@@ -401,10 +403,10 @@ namespace Varneon.VUdon.Noclip
         /// Sets the noclip max speed
         /// </summary>
         /// <param name="maxSpeed"></param>
-        [PublicAPI("Sets the noclip max speed")]
+        [Obsolete("Use the public field Speed instead")]
         public void _SetMaxSpeed(float maxSpeed)
         {
-            speed = maxSpeed;
+            Speed = maxSpeed;
         }
         #endregion
     }
