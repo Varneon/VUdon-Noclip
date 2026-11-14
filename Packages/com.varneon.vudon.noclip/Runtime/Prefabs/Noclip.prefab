@@ -25,12 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7617984235308416787}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7117740436155577295
 MonoBehaviour:
@@ -54,10 +55,10 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 6077235003161976082}
-  noclipTriggerMethod: 0
-  toggleThreshold: 0.25
-  speed: 15
-  vrInputMultiplier:
+  AllowToggleWithDoubleJump: 1
+  ToggleThreshold: 0.25
+  Speed: 15
+  VRInputMultiplier:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -81,10 +82,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  desktopSpeedFraction: 0.25
-  desktopVerticalInput: 1
-  upKey: 101
-  downKey: 113
+  DesktopSpeedFraction: 0.25
+  AllowDesktopVerticalInput: 1
+  UpKey: 101
+  DownKey: 113
+  callbackReceivers: []
 --- !u!114 &6077235003161976082
 MonoBehaviour:
   m_ObjectHideFlags: 0
