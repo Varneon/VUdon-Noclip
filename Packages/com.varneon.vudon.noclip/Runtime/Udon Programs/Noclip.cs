@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Varneon.VUdon.Editors;
 using Varneon.VUdon.Noclip.Abstract;
-using Varneon.VUdon.Noclip.Enums;
 using VRC.SDKBase;
 using VRC.Udon.Common;
 
@@ -24,12 +23,15 @@ namespace Varneon.VUdon.Noclip
     {
         #region Public Fields
         /// <summary>
-        /// Methdod for triggering noclip
+        /// Can the player double jump to toggle Noclip.
+        /// <para>If disabled, only Noclip's API methods can be used to enable and disable Noclip.</para>
         /// </summary>
+        /// <remarks>
+        /// NOTE: If the player is currently in Noclip mode and you disable this during runtime, you must manually apply the desired Noclip state via the Noclip's API!
+        /// </remarks>
         [FoldoutHeader("Options", "Options that can be edited before build and in-game")]
-        [FormerlySerializedAs("noclipTriggerMethod")]
-        [Tooltip("Method for triggering the noclip mode")]
-        public NoclipTriggerMethod NoclipTriggerMethod = NoclipTriggerMethod.DoubleJump;
+        [Tooltip("Can the player double jump to toggle Noclip.\n\nIf disabled, only Noclip's API methods can be used to enable and disable Noclip.\n\nNOTE: If the player is currently in Noclip mode and you disable this during runtime, you must manually apply the desired Noclip state via the Noclip's API!")]
+        public bool AllowToggleWithDoubleJump = true;
 
         /// <summary>
         /// Time in which jump has to be double tapped in order to toggle noclip
@@ -103,11 +105,6 @@ namespace Varneon.VUdon.Noclip
 
         #region Private Variables
         /// <summary>
-        /// Can double jump be used to toggle noclip
-        /// </summary>
-        private bool toggleByDoubleJump;
-
-        /// <summary>
         /// Is the noclip currently enabled
         /// </summary>
         private bool noclipEnabled;
@@ -167,8 +164,6 @@ namespace Varneon.VUdon.Noclip
             localPlayer = Networking.LocalPlayer;
 
             vrEnabled = localPlayer.IsUserInVR();
-
-            toggleByDoubleJump = NoclipTriggerMethod == NoclipTriggerMethod.DoubleJump;
         }
 
         private void LateUpdate()
@@ -297,7 +292,7 @@ namespace Varneon.VUdon.Noclip
         public override void InputJump(bool value, UdonInputEventArgs args)
         {
             // Only register inputs when noclip can be toggled with double jump and jump was just pressed
-            if (toggleByDoubleJump && value)
+            if (AllowToggleWithDoubleJump && value)
             {
                 if (noclipEnabled)
                 {
