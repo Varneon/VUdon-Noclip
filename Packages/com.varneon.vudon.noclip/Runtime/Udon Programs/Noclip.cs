@@ -52,6 +52,15 @@ namespace Varneon.VUdon.Noclip
         public float Speed = 15f;
 
         /// <summary>
+        /// Attempt to automatically detect when the player is seated (local player's collider can't be found anymore) and immediately disable Noclip (teleporting to the next position would eject the player out of the seat)
+        /// </summary>
+        /// <remarks>
+        /// For more complex worlds it is recommended to disable this and instead call _DisableNoclip() from your own script when your seats in the world detect the local player entering.
+        /// </remarks>
+        [Tooltip("Attempt to automatically detect when the player is seated (local player's collider can't be found anymore) and immediately disable Noclip (teleporting to the next position would eject the player out of the seat)\n\nFor more complex worlds it is recommended to disable this and instead call _DisableNoclip() from your own script when your seats in the world detect the local player entering.")]
+        public bool AutoDisableOnSeated = true;
+
+        /// <summary>
         /// Input speed multiplier curve for VR
         /// </summary>
         [FoldoutHeader("VR", "VR exclusive settings")]
@@ -178,7 +187,7 @@ namespace Varneon.VUdon.Noclip
                 // If the player's collider isn't enabled, the player has entered a seat so disable noclip
                 // Radius is supposed to be 0f but the check sometimes fails when the player is inside a collider
                 // Larger radius might return false positives if LocalPlayer layer is being used for something else in the world
-                if (Physics.OverlapSphereNonAlloc(localPlayerPos, 100000f, playerCollider, 1024) < 1)
+                if (AutoDisableOnSeated && Physics.OverlapSphereNonAlloc(localPlayerPos, 100000f, playerCollider, 1024) < 1)
                 {
                     SetNoclipEnabled(false);
 
